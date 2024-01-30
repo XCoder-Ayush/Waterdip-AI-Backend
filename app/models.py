@@ -1,25 +1,19 @@
 from .extension import db
 
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(100), unique=True)
-    password = db.Column(db.String(100))
-
-    def is_active(self):
-        return True
-
-    def is_authenticated(self):
-        return self.is_authenticated
-
-    def is_anonymous(self):
-        return False
-
-    def is_admin(self):
-        return self.admin
+class Task(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    title = db.Column(db.String(100), unique=True)
+    is_completed = db.Column(db.Boolean, default=False)
 
     def get_id(self):
-        return self.id
+        return str(self.id)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'title': self.title,
+            'is_completed': self.is_completed
+        }
 
     def __repr__(self):
-        return f"<User {self.username}>"
+        return f"<Task ID: {self.id}, Task Title: {self.title}, Completed: {self.is_completed}>"
